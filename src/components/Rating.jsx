@@ -14,7 +14,7 @@ export default function Rating(props) {
           key={i}
           fontSize={props?.fontSize | 16}
           as={StarIcon}
-          color={'p.500'}
+          color={props?.color | 'p.500'}
         />
       ))}
       {Array.from({ length: half }, (_, i) => i + 1).map(i => (
@@ -22,7 +22,7 @@ export default function Rating(props) {
           key={i}
           fontSize={props?.fontSize | 16}
           as={StarHalfIcon}
-          color={'p.500'}
+          color={props?.color | 'p.500'}
         />
       ))}
     </HStack>

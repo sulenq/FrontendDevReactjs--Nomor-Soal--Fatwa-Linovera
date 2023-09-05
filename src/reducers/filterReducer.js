@@ -12,6 +12,9 @@ function filterReducer(filter, action) {
     case 'selectPrice':
       return { ...filter, price: action.price };
 
+    case 'selectCategories':
+      return { ...filter, categories: action.categories };
+
     case 'reset':
       return {
         openNow: false,

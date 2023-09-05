@@ -3,6 +3,7 @@ import {
   HStack,
   Image,
   SimpleGrid,
+  Spinner,
   Text,
   VStack,
 } from '@chakra-ui/react';
@@ -17,30 +18,27 @@ export default function ReviewsList(props) {
   // utils
   const getReviews = useRef(() => {});
   getReviews.current = async () => {
-    const encodedParams = new URLSearchParams();
-    encodedParams.set('location_id', props?.id);
-    encodedParams.set('language', 'en_US');
-    encodedParams.set('currency', 'USD');
-    encodedParams.set('offset', '0');
-
     const options = {
-      method: 'POST',
-      url: 'https://restaurants222.p.rapidapi.com/reviews',
-      headers: {
-        'content-type': 'application/x-www-form-urlencoded',
-        'X-RapidAPI-Key': '6892fa5b83mshd00612e97bc8d9ap10baaejsnc1319da14464',
-        'X-RapidAPI-Host': 'restaurants222.p.rapidapi.com',
+      method: 'GET',
+      url: 'https://travel-advisor.p.rapidapi.com/reviews/list',
+      params: {
+        location_id: props?.id,
+        limit: '20',
+        currency: 'USD',
+        lang: 'en_US',
       },
-      data: encodedParams,
+      headers: {
+        'X-RapidAPI-Key': '0f7c8278f5msh3f2c6a3011243d7p14a4aajsn8ecfb7246109',
+        'X-RapidAPI-Host': 'travel-advisor.p.rapidapi.com',
+      },
     };
-
     try {
       const response = await axios.request(options);
-      console.log(response.data.results.data);
-      return response.data.results.data;
+      // console.log(response);
+      return response.data.data;
     } catch (error) {
-      console.error(error);
-      return error.response.status;
+      // console.error(error);
+      return error?.response?.status;
     }
   };
 
@@ -50,7 +48,7 @@ export default function ReviewsList(props) {
       const status = res?.response?.data?.status;
       if (status) {
         if (status === 500) {
-          setReviews([status]);
+          setReviews(status);
         }
       } else {
         setReviews(res);
@@ -78,10 +76,10 @@ export default function ReviewsList(props) {
         REFRESH
       </Button>
     </VStack>
-  ) : (
+  ) : reviews?.length > 0 ? (
     <SimpleGrid
       w={'100%'}
-      columns={[1, 2, 3, 4]}
+      columns={[1]}
       gap={6}
       rowGap={16}
       className="dp"
@@ -105,11 +103,15 @@ export default function ReviewsList(props) {
 
                 <Rating rating={r?.rating} />
 
-                <Text>{r?.text}</Text>
+                <Text noOfLines={5}>{r?.text}</Text>
               </VStack>
             );
           })
         : ''}
     </SimpleGrid>
+  ) : (
+    <VStack w={'100%'} h={'400px'} justify={'center'}>
+      <Spinner size={'lg'} />
+    </VStack>
   );
 }

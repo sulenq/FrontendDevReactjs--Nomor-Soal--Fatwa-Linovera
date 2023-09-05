@@ -1,6 +1,15 @@
-import { Button, SimpleGrid, Spinner, Text, VStack } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  HStack,
+  SimpleGrid,
+  Spinner,
+  Text,
+  VStack,
+} from '@chakra-ui/react';
 
 import Filter from '../components/Filter';
+import { ColorModeSwitcher } from '../ColorModeSwitcher';
 import RestaurantItem from '../components/RestaurantItem';
 
 import isRestaurantOpen from '../utils/isRestaurantOpen';
@@ -54,15 +63,21 @@ export default function Main(props) {
   };
 
   return (
-    <VStack id="main" maxW={'1280px'} mx={'auto'} gap={0} align={'flex-start'}>
-      <Text fontSize={42} lineHeight={1} my={8} mb={4} className="dp">
-        Restaurants
-      </Text>
+    <VStack id="main" mx={'auto'} gap={0} align={'flex-start'}>
+      <HStack justify={'space-between'} w={'100%'} className="dp">
+        <Text fontSize={42} lineHeight={1} my={8} mb={4} fontWeight={700}>
+          Restaurants
+        </Text>
 
-      <Text w={['100%', '80%', '47%']} className="dp" mb={4}>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua
-      </Text>
+        <ColorModeSwitcher />
+      </HStack>
+
+      <Box className="dp">
+        <Text w={['100%', '80%', '47%']} mb={4}>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua
+        </Text>
+      </Box>
 
       <Filter filter={filter} filterDispatch={filterDispatch} />
 
@@ -115,7 +130,7 @@ export default function Main(props) {
             <Button
               alignSelf={'center'}
               w={'100%'}
-              maxW={'400px'}
+              maxW={'320px'}
               mb={16}
               variant={'outline'}
               colorScheme="p"
@@ -127,8 +142,8 @@ export default function Main(props) {
           </>
         )
       ) : (
-        <VStack mx={'auto'} h={'500px'} justify={'center'}>
-          <Spinner my={16} size={'xl'}/>
+        <VStack mx={'auto'} h={'400px'} justify={'center'}>
+          <Spinner my={16} size={'xl'} />
         </VStack>
       )}
     </VStack>

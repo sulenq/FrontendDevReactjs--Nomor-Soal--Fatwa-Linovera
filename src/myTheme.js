@@ -64,17 +64,17 @@ export const myTheme = extendTheme({
       }),
     },
 
-    // Menu: {
-    //   baseStyle: props => ({
-    //     list: {
-    //       bg: props.colorMode === 'dark' ? '#111111' : 'white',
-    //     },
-    //     item: {
-    //       bg: props.colorMode === 'dark' ? '#111111' : 'white',
-    //       _hover: { bg: 'var(--divider)' },
-    //     },
-    //   }),
-    // },
+    Menu: {
+      baseStyle: props => ({
+        list: {
+          bg: props.colorMode === 'dark' ? '#111111' : 'white',
+        },
+        item: {
+          bg: props.colorMode === 'dark' ? '#111111' : 'white',
+          _hover: { bg: 'var(--divider)' },
+        },
+      }),
+    },
 
     Button: {
       baseStyle: props => ({

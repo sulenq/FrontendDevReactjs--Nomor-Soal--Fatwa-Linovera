@@ -30,29 +30,26 @@ export default function Details() {
   // utils
   const getDetails = useRef(() => {});
   getDetails.current = async () => {
-    const encodedParams = new URLSearchParams();
-    // p
-    encodedParams.set('location_id', id);
-    encodedParams.set('language', 'en_US');
-    encodedParams.set('currency', 'USD');
-
     const options = {
-      method: 'POST',
-      url: 'https://restaurants222.p.rapidapi.com/detail',
-      headers: {
-        'content-type': 'application/x-www-form-urlencoded',
-        'X-RapidAPI-Key': '6892fa5b83mshd00612e97bc8d9ap10baaejsnc1319da14464',
-        'X-RapidAPI-Host': 'restaurants222.p.rapidapi.com',
+      method: 'GET',
+      url: 'https://travel-advisor.p.rapidapi.com/restaurants/get-details',
+      params: {
+        location_id: id,
+        currency: 'USD',
+        lang: 'en_US',
       },
-      data: encodedParams,
+      headers: {
+        'X-RapidAPI-Key': '0f7c8278f5msh3f2c6a3011243d7p14a4aajsn8ecfb7246109',
+        'X-RapidAPI-Host': 'travel-advisor.p.rapidapi.com',
+      },
     };
 
     try {
       const response = await axios.request(options);
-      console.log(response.data);
-      return response?.data?.results;
+      console.log(response);
+      return response?.data;
     } catch (error) {
-      console.error(error);
+      //   console.error(error);
       return error;
     }
   };
@@ -91,69 +88,79 @@ export default function Details() {
       </Button>
     </VStack>
   ) : Object.keys(details).length > 0 ? (
-    <VStack
-      id="details"
-      maxW={'1280px'}
-      mx={'auto'}
-      gap={0}
-      align={'flex-start'}
-    >
-      <Text
-        fontSize={42}
-        fontWeight={700}
-        lineHeight={1}
-        mt={8}
-        mb={2}
-        className="dp"
-        color={'p.500'}
-      >
-        {details?.name}
-      </Text>
+    <VStack id="details" mx={'auto'} gap={0} align={'flex-start'}>
+      <Box position={'relative'} w={'100%'} h={'400px'}>
+        <Box
+          position={'absolute'}
+          w={'100%'}
+          h={'400px'}
+          bgImage={`url(${details?.photo?.images?.original?.url})`}
+          bgPosition={'center'}
+          bgSize={'cover'}
+          filter={'brightness(30%)'}
+          zIndex={-1}
+        ></Box>
 
-      <Rating rating={details?.rating} fontSize={30} className="dp" mb={4} />
+        <Box className="dp" color={'white'} mt={'280px'}>
+          <Text fontSize={42} fontWeight={700} lineHeight={1} mt={8} mb={2}>
+            {details?.name}
+          </Text>
 
-      <SimpleGrid
-        className="dp"
-        columns={[1, null, 2]}
+          <Rating
+            rating={details?.rating}
+            fontSize={30}
+            mb={4}
+            color={'white !important'}
+          />
+        </Box>
+      </Box>
+
+      <Box
         w={'100%'}
-        gap={4}
-        py={4}
         borderTop={'1px solid var(--divider)'}
         borderBottom={'1px solid var(--divider)'}
       >
-        <Box pr={0} flexShrink={1}>
-          <HStack opacity={0.5}>
-            <Icon as={PlaceIcon} color={'p.400'} />
-
-            <Text fontSize={24} fontWeight={600} color={'p.400'}>
-              Location
-            </Text>
-          </HStack>
-
-          <Box opacity={0.5} mb={1}>
-            <Text color={'p.400'} fontSize={18} px={8}>
-              {details?.address}
-            </Text>
-          </Box>
-        </Box>
-
-        <Button
-          w={'140px'}
-          justifySelf={[null, null, 'flex-end']}
-          ml={[8, null, 0]}
-          alignSelf={'center'}
-          as={Link}
-          href={`https://www.google.com/maps/place/${details?.latitude} ${details?.longitude}`}
-          textDecor={'none !important'}
-          isExternal
-          flexShrink={0}
-          //   variant={'outline'}
-          colorScheme="p"
-          rightIcon={<Icon as={ArrowOutwardIcon} fontSize={16} mb={'2px'} />}
+        <SimpleGrid
+          className="dp"
+          columns={[1, null, 2]}
+          w={'100%'}
+          gap={4}
+          py={4}
         >
-          Maps
-        </Button>
-      </SimpleGrid>
+          <Box pr={0} flexShrink={1}>
+            <HStack opacity={0.5}>
+              <Icon as={PlaceIcon} />
+
+              <Text fontSize={24} fontWeight={600}>
+                Location
+              </Text>
+            </HStack>
+
+            <Box opacity={0.5} mb={1}>
+              <Text fontSize={18} px={8}>
+                {details?.address}
+              </Text>
+            </Box>
+          </Box>
+
+          <Button
+            w={'140px'}
+            justifySelf={[null, null, 'flex-end']}
+            ml={[8, null, 0]}
+            alignSelf={'center'}
+            as={Link}
+            href={`https://www.google.com/maps/place/${details?.latitude} ${details?.longitude}`}
+            textDecor={'none !important'}
+            isExternal
+            flexShrink={0}
+            //   variant={'outline'}
+            colorScheme="p"
+            rightIcon={<Icon as={ArrowOutwardIcon} fontSize={16} mb={'2px'} />}
+          >
+            Maps
+          </Button>
+        </SimpleGrid>
+      </Box>
 
       <Text className="dp" fontSize={28} mb={6} mt={10}>
         Reviews

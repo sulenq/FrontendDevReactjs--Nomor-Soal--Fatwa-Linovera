@@ -37,7 +37,7 @@ export default function RestaurantItem({ r }) {
 
               <Text>•</Text>
 
-              <Text>{r?.price_level}</Text>
+              <Text>{r?.price_level || 'Unsure'}</Text>
             </HStack>
 
             <HStack gap={1}>
@@ -51,7 +51,6 @@ export default function RestaurantItem({ r }) {
                 mb={'1px'}
               ></Box>
 
-              {/* <Text>{r?.is_closed ? 'CLOSED' : 'OPEN NOW'}</Text> */}
               <Text>{r?.open_now_text ? r?.open_now_text : 'Unsure'}</Text>
             </HStack>
           </HStack>

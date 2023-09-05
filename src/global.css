@@ -23,6 +23,9 @@
 
 .dp {
   padding: 0 16px;
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 @media screen and (min-width: 48em) {
