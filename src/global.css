@@ -1,0 +1,38 @@
+* {
+  font-family: 'Source Sans 3', sans-serif !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+:root {
+  --p50: #f1f8ff;
+  --p100: #d4e4f6;
+  --p200: #adc8ed;
+  --p300: #7898ca;
+  --p400: #496596;
+  --p500: #1a2c51;
+  --p600: #132145;
+  --p700: #0d183a;
+  --p800: #08112e;
+  --p900: #040b26;
+  --b: #111111;
+  --bt: #333333;
+  --wt: #e8e6e3;
+  --divider: #8787872e;
+  --divider2: #5f6b7f5d;
+}
+
+.dp {
+  padding: 0 16px;
+}
+
+@media screen and (min-width: 48em) {
+  .dp {
+    padding: 0 24px;
+  }
+}
+
+@media screen and (min-width: 62em) {
+  .dp {
+    padding: 0 32px;
+  }
+}
