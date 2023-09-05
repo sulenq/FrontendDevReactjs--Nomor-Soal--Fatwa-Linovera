@@ -8,6 +8,7 @@ import {
   Menu,
   MenuButton,
   Text,
+  Stack,
 } from '@chakra-ui/react';
 
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -105,7 +106,7 @@ export default function Filter(props) {
     'Wine Bar',
   ];
 
-  const filterInitialValues = { openNow: false, price: '', categories: '' };
+  const filterInitialValues = props?.filterInitialValues;
 
   // utils
   const isClearFilterDisabled = () => {
@@ -143,107 +144,114 @@ export default function Filter(props) {
       borderTop={'1px solid var(--divider)'}
       borderBottom={'1px solid var(--divider)'}
     >
-      <HStack
+      <Stack
+        direction={['column', 'row']}
         w={'100%'}
         gap={5}
         justify={'space-between'}
         className="dp"
         py={4}
       >
-        <HStack gap={5}>
+        <Stack direction={['column', null, 'row']} rowGap={1} columnGap={5}>
           <Text flexShrink={0}>Filter By:</Text>
 
-          {/* Open Now */}
-          <HStack
-            flexShrink={0}
-            cursor={'pointer'}
-            borderBottom={'1px solid var(--divider)'}
-            h={'30px'}
-            onClick={handleToggleOpenNow}
-          >
-            <Box
-              w={'16px'}
-              h={'16px'}
-              border={
-                filter?.openNow
-                  ? '4px solid var(--p500)'
-                  : '2px solid var(--divider)'
-              }
-              borderRadius={'full'}
-            ></Box>
+          <HStack>
+            {/* Open Now */}
+            <HStack
+              flexShrink={0}
+              cursor={'pointer'}
+              borderBottom={'1px solid var(--divider)'}
+              h={'30px'}
+              onClick={handleToggleOpenNow}
+            >
+              <Box
+                w={'16px'}
+                h={'16px'}
+                border={
+                  filter?.openNow
+                    ? '4px solid #68D391'
+                    : '2px solid var(--divider)'
+                }
+                borderRadius={'full'}
+              ></Box>
 
-            <Text>Open Now</Text>
+              <Text>Open Now</Text>
+            </HStack>
+
+            {/* Price */}
+            <Menu>
+              <MenuButton
+                as={Button}
+                h={'30px'}
+                px={0}
+                variant={'ghost'}
+                rightIcon={<Icon as={KeyboardArrowDownIcon} fontSize={20} />}
+                fontWeight={400}
+                borderBottom={'1px solid var(--divider)'}
+                textAlign={'left'}
+              >
+                <Text mr={4}>{filter?.price || 'Price'}</Text>
+              </MenuButton>
+
+              <MenuList minW={'100px'} p={0}>
+                <Text p={3} fontSize={14} opacity={0.5} lineHeight={1}>
+                  Select price level
+                </Text>
+
+                {prices.map((p, i) => {
+                  return (
+                    <MenuItem
+                      key={i}
+                      onClick={() => {
+                        handleSelectPrice(p);
+                      }}
+                    >
+                      <HStack>
+                        <Text>{p}</Text>
+                        <Text opacity={0.5}>{`(${i + 1})`}</Text>
+                      </HStack>
+                    </MenuItem>
+                  );
+                })}
+              </MenuList>
+            </Menu>
+
+            {/* Categories */}
+            <Menu>
+              <MenuButton
+                as={Button}
+                h={'30px'}
+                px={0}
+                variant={'ghost'}
+                rightIcon={<Icon as={KeyboardArrowDownIcon} fontSize={20} />}
+                fontWeight={400}
+                borderBottom={'1px solid var(--divider)'}
+                textAlign={'left'}
+              >
+                <Text mr={4}>{filter?.categories || 'Categories'}</Text>
+              </MenuButton>
+
+              <MenuList minW={'100px'} maxH={'500px'} overflow={'auto'} p={0}>
+                <Text p={3} fontSize={14} opacity={0.5} lineHeight={1}>
+                  Select category/cuisine
+                </Text>
+
+                {categories.map((c, i) => {
+                  return (
+                    <MenuItem
+                      key={i}
+                      onClick={() => {
+                        handleSelectCategories(c);
+                      }}
+                    >
+                      {c}
+                    </MenuItem>
+                  );
+                })}
+              </MenuList>
+            </Menu>
           </HStack>
-
-          {/* Price */}
-          <Menu>
-            <MenuButton
-              as={Button}
-              h={'30px'}
-              px={0}
-              variant={'ghost'}
-              rightIcon={<Icon as={KeyboardArrowDownIcon} fontSize={20} />}
-              fontWeight={400}
-              borderBottom={'1px solid var(--divider)'}
-              textAlign={'left'}
-            >
-              <Text mr={4}>{filter?.price || 'Price'}</Text>
-            </MenuButton>
-
-            <MenuList minW={'100px'} p={0}>
-              <Text p={3} fontSize={14} opacity={0.5} lineHeight={1}>
-                Select price level
-              </Text>
-
-              {prices.map((p, i) => {
-                return (
-                  <MenuItem
-                    key={i}
-                    onClick={() => {
-                      handleSelectPrice(p);
-                    }}
-                  >
-                    <HStack>
-                      <Text>{p}</Text>
-                      <Text opacity={0.5}>{`(${i + 1})`}</Text>
-                    </HStack>
-                  </MenuItem>
-                );
-              })}
-            </MenuList>
-          </Menu>
-
-          {/* Categories */}
-          <Menu>
-            <MenuButton
-              as={Button}
-              h={'30px'}
-              px={0}
-              variant={'ghost'}
-              rightIcon={<Icon as={KeyboardArrowDownIcon} fontSize={20} />}
-              fontWeight={400}
-              borderBottom={'1px solid var(--divider)'}
-              textAlign={'left'}
-            >
-              <Text mr={4}>{filter?.categories || 'Categories'}</Text>
-            </MenuButton>
-
-            <MenuList minW={'100px'} maxH={'500px'} overflow={'auto'} p={0}>
-              {categories.map((c, i) => {
-                return (
-                  <MenuItem
-                    key={i}
-                    onClick={() => {
-                      handleSelectCategories(c);
-                    }}
-                  >
-                    {c}
-                  </MenuItem>
-                );
-              })}
-            </MenuList>
-          </Menu>
-        </HStack>
+        </Stack>
 
         <Button
           isDisabled={isClearFilterDisabled() ? true : false}
@@ -254,7 +262,7 @@ export default function Filter(props) {
         >
           CLEAR ALL
         </Button>
-      </HStack>
+      </Stack>
     </Box>
   );
 }

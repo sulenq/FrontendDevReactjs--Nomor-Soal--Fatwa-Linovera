@@ -28,7 +28,7 @@ export default function ReviewsList(props) {
         lang: 'en_US',
       },
       headers: {
-        'X-RapidAPI-Key': '0f7c8278f5msh3f2c6a3011243d7p14a4aajsn8ecfb7246109',
+        'X-RapidAPI-Key': '4b98a873a5msh1293f6b8d7ccbd3p1f9614jsn46f0cf647c89',
         'X-RapidAPI-Host': 'travel-advisor.p.rapidapi.com',
       },
     };

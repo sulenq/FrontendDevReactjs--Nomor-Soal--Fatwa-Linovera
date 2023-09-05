@@ -23,7 +23,6 @@ export default function Main(props) {
     }
     return d;
   };
-
   const filterPrice = d => {
     const priceRange = d?.price_level?.split(' - ');
     const maxPrice = priceRange?.[priceRange?.length - 1]?.length;
@@ -34,6 +33,8 @@ export default function Main(props) {
       (filter?.price?.length <= maxPrice && filter?.price?.length >= minPrice)
     );
   };
+
+  const filterInitialValues = props?.filterInitialValues;
 
   const filter = props?.filter;
 
@@ -79,7 +80,11 @@ export default function Main(props) {
         </Text>
       </Box>
 
-      <Filter filter={filter} filterDispatch={filterDispatch} />
+      <Filter
+        filterInitialValues={filterInitialValues}
+        filter={filter}
+        filterDispatch={filterDispatch}
+      />
 
       <Text className="dp" fontSize={28} mb={6} mt={10}>
         All Restaurants
