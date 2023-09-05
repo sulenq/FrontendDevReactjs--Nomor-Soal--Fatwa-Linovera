@@ -43,7 +43,7 @@ function App() {
       url: 'https://restaurants222.p.rapidapi.com/search',
       headers: {
         'content-type': 'application/x-www-form-urlencoded',
-        'X-RapidAPI-Key': 'b04d851b8dmsha944d4cba031189p17f3e2jsnfe6a1423fe40',
+        'X-RapidAPI-Key': '6892fa5b83mshd00612e97bc8d9ap10baaejsnc1319da14464',
         'X-RapidAPI-Host': 'restaurants222.p.rapidapi.com',
       },
       data: encodedParams,

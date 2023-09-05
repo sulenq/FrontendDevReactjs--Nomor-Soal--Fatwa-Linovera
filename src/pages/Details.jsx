@@ -10,6 +10,7 @@ import {
   VStack,
   Link,
   SimpleGrid,
+  Spinner,
 } from '@chakra-ui/react';
 
 import PlaceIcon from '@mui/icons-material/Place';
@@ -40,7 +41,7 @@ export default function Details() {
       url: 'https://restaurants222.p.rapidapi.com/detail',
       headers: {
         'content-type': 'application/x-www-form-urlencoded',
-        'X-RapidAPI-Key': 'b04d851b8dmsha944d4cba031189p17f3e2jsnfe6a1423fe40',
+        'X-RapidAPI-Key': '6892fa5b83mshd00612e97bc8d9ap10baaejsnc1319da14464',
         'X-RapidAPI-Host': 'restaurants222.p.rapidapi.com',
       },
       data: encodedParams,
@@ -59,10 +60,10 @@ export default function Details() {
   useEffect(() => {
     (async () => {
       const res = await getDetails.current();
-      const status = res?.response?.data?.status;
+      const status = res?.response?.status;
       if (status) {
         if (status === 500) {
-          setDetails([status]);
+          setDetails(status);
         }
       } else {
         setDetails(res);
@@ -89,7 +90,7 @@ export default function Details() {
         REFRESH
       </Button>
     </VStack>
-  ) : (
+  ) : Object.keys(details).length > 0 ? (
     <VStack
       id="details"
       maxW={'1280px'}
@@ -159,6 +160,10 @@ export default function Details() {
       </Text>
 
       <ReviewsList id={details?.location_id} />
+    </VStack>
+  ) : (
+    <VStack h={'100vh'} justify={'center'}>
+      <Spinner size={'xl'} />
     </VStack>
   );
 }
