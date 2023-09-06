@@ -12,7 +12,7 @@ import Filter from '../components/Filter';
 import { ColorModeSwitcher } from '../ColorModeSwitcher';
 import RestaurantItem from '../components/RestaurantItem';
 
-import isRestaurantOpen from '../utils/isRestaurantOpen';
+import { isRestaurantOpen } from '../utils/utils';
 import { useState } from 'react';
 
 export default function Main(props) {
@@ -127,8 +127,8 @@ export default function Main(props) {
 
           <SimpleGrid
             w={'100%'}
-            columns={[1, 2, 3, 4]}
-            gap={6}
+            columns={[2, 2, 3, 4]}
+            gap={[4, null, 6]}
             rowGap={16}
             className="dp"
             mb={16}

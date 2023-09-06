@@ -13,7 +13,7 @@ import {
 
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
-import useScreenWidth from '../utils/useScreenWidth';
+import { useScreenWidth } from '../utils/utils';
 
 export default function Filter(props) {
   // constant
@@ -1308,7 +1308,7 @@ export default function Filter(props) {
     >
       <Stack
         align={'center'}
-        direction={['column', 'row']}
+        direction={sw < 570 ? 'column' : 'row'}
         w={'100%'}
         gap={5}
         justify={'space-between'}
@@ -1328,12 +1328,12 @@ export default function Filter(props) {
 
           <Stack
             w={'100%'}
-            direction={sw < 350 ? 'column' : 'row'}
-            gap={sw < 350 ? 2 : 6}
+            direction={sw < 480 ? 'column' : 'row'}
+            gap={sw < 480 ? 2 : 6}
           >
             {/* Open Now */}
             <HStack
-              flexShrink={0}
+              // flexShrink={0}
               cursor={'pointer'}
               borderBottom={'1px solid var(--divider)'}
               h={'30px'}
@@ -1358,13 +1358,19 @@ export default function Filter(props) {
               <Box>
                 <MenuButton
                   as={Button}
+                  w={'100%'}
                   h={'30px'}
                   px={2}
                   variant={'ghost'}
                   fontWeight={400}
                   textAlign={'left'}
                 >
-                  <HStack h={'30px'} borderBottom={'1px solid var(--divider)'}>
+                  <HStack
+                    w={'100%'}
+                    justify={'space-between'}
+                    h={'30px'}
+                    borderBottom={'1px solid var(--divider)'}
+                  >
                     <Text mr={4}>{filter?.price || 'Price'}</Text>
                     <Icon as={KeyboardArrowDownIcon} fontSize={20} />
                   </HStack>
@@ -1414,7 +1420,12 @@ export default function Filter(props) {
                 fontWeight={400}
                 textAlign={'left'}
               >
-                <HStack h={'30px'} borderBottom={'1px solid var(--divider)'}>
+                <HStack
+                  // w={'100%'}
+                  justify={'space-between'}
+                  h={'30px'}
+                  borderBottom={'1px solid var(--divider)'}
+                >
                   <Text mr={4}>{filter?.categories.label}</Text>
                   <Icon as={KeyboardArrowDownIcon} fontSize={20} />
                 </HStack>
@@ -1449,7 +1460,7 @@ export default function Filter(props) {
         </Stack>
 
         <Button
-          w={['100%', 'fit-content']}
+          w={sw < 570 ? '100%' : ''}
           isDisabled={isClearFilterDisabled() ? true : false}
           variant={'outline'}
           px={8}

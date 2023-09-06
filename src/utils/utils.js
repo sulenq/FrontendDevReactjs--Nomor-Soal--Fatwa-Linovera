@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export default function useScreenWidth() {
+function useScreenWidth() {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   function handleResize() {
     setScreenWidth(window.innerWidth);
@@ -8,3 +8,12 @@ export default function useScreenWidth() {
   window.addEventListener('resize', handleResize);
   return screenWidth;
 }
+
+function isRestaurantOpen(text) {
+  return (
+    (text?.includes('Open') && !text?.includes('Opens')) ||
+    text?.includes('Closes')
+  );
+}
+
+export { useScreenWidth, isRestaurantOpen };
