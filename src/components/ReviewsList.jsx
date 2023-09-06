@@ -140,7 +140,7 @@ export default function ReviewsList(props) {
                       boxSize={'30px'}
                     />
 
-                    <Text fontSize={20} fontWeight={600}>
+                    <Text fontSize={18} fontWeight={600}>
                       {r?.user?.username}
                     </Text>
                   </HStack>

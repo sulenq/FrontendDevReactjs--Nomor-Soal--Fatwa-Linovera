@@ -193,7 +193,7 @@ export default function Details() {
         </SimpleGrid>
       </Box>
 
-      <Text className="dp" fontSize={28} mb={6} mt={10}>
+      <Text className="dp" fontSize={24} mb={6} mt={10}>
         Reviews
       </Text>
 
