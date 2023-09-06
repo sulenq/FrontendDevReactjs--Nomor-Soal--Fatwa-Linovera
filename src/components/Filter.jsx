@@ -1361,16 +1361,12 @@ export default function Filter(props) {
                   w={'100%'}
                   h={'30px'}
                   px={2}
+                  borderBottom={'1px solid var(--divider)'}
                   variant={'ghost'}
                   fontWeight={400}
                   textAlign={'left'}
                 >
-                  <HStack
-                    w={'100%'}
-                    justify={'space-between'}
-                    h={'30px'}
-                    borderBottom={'1px solid var(--divider)'}
-                  >
+                  <HStack w={'100%'} justify={'space-between'} h={'30px'}>
                     <Text mr={4}>{filter?.price || 'Price'}</Text>
                     <Icon as={KeyboardArrowDownIcon} fontSize={20} />
                   </HStack>
@@ -1418,13 +1414,13 @@ export default function Filter(props) {
                 px={2}
                 variant={'ghost'}
                 fontWeight={400}
+                borderBottom={'1px solid var(--divider)'}
                 textAlign={'left'}
               >
                 <HStack
                   // w={'100%'}
                   justify={'space-between'}
                   h={'30px'}
-                  borderBottom={'1px solid var(--divider)'}
                 >
                   <Text mr={4}>{filter?.categories.label}</Text>
                   <Icon as={KeyboardArrowDownIcon} fontSize={20} />
