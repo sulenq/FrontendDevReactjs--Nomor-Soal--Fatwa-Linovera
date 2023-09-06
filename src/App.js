@@ -1,4 +1,4 @@
-import { useState, useEffect, useReducer } from 'react';
+import { useState, useEffect, useReducer, useCallback } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import axios from 'axios';
 
@@ -17,7 +17,7 @@ function App() {
   const filterInitialValues = {
     openNow: false,
     price: '',
-    categories: '',
+    categories: { label: 'Categories', value: 'all' },
   };
 
   // dynamic
@@ -26,12 +26,14 @@ function App() {
     filterInitialValues
   );
 
+  const [categories, setCategories] = useState([]);
+
   const [offset, setOffset] = useState(0);
 
-  const [restaurants, setRestaurants] = useState({});
+  const [restaurants, setRestaurants] = useState([]);
 
   // utils
-  const getRestaurants = async offset => {
+  const getRestaurants = useCallback(async p => {
     const options = {
       method: 'GET',
       url: 'https://travel-advisor.p.rapidapi.com/restaurants/list',
@@ -44,10 +46,11 @@ function App() {
         limit: '8',
         open_now: 'false',
         lang: 'en_US',
-        offset: offset,
+        offset: p?.offset,
+        combined_food: filter?.categories?.value,
       },
       headers: {
-        'X-RapidAPI-Key': '4b98a873a5msh1293f6b8d7ccbd3p1f9614jsn46f0cf647c89',
+        'X-RapidAPI-Key': 'd4108be16emsh49e6646cdbd2708p125a95jsnd8975de09285',
         'X-RapidAPI-Host': 'travel-advisor.p.rapidapi.com',
       },
     };
@@ -55,28 +58,33 @@ function App() {
     try {
       const response = await axios.request(options);
       setOffset(ps => ps + parseInt(response.data?.paging?.results));
+      setCategories(
+        response?.data?.filters_v2?.filter_sections[1]?.filter_groups[0]
+          ?.options
+      );
       // console.log(response.data);
       return response.data?.data;
     } catch (error) {
       console.error(error);
       return error;
     }
-  };
+  }, [filter.categories.value]);
 
   useEffect(() => {
     (async () => {
-      const res = await getRestaurants(0);
+      setRestaurants([]);
+      const res = await getRestaurants({ offset: 0 });
       const status = res?.response?.data?.status;
       if (status) {
         if (status === 500) {
-          setRestaurants([status]);
+          setRestaurants(status);
         }
       } else {
         setRestaurants(res);
       }
     })();
-    // setRestaurants([500]);
-  }, []);
+    // setRestaurants(500);
+  }, [filter?.categories, getRestaurants]);
 
   return (
     <ChakraProvider theme={myTheme}>
@@ -86,6 +94,7 @@ function App() {
             path="/"
             element={
               <Main
+                categories={categories}
                 filterInitialValues={filterInitialValues}
                 filter={filter}
                 filterDispatch={filterDispatch}

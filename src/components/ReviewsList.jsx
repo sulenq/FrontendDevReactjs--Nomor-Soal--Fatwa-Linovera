@@ -28,7 +28,7 @@ export default function ReviewsList(props) {
         lang: 'en_US',
       },
       headers: {
-        'X-RapidAPI-Key': '4b98a873a5msh1293f6b8d7ccbd3p1f9614jsn46f0cf647c89',
+        'X-RapidAPI-Key': 'd4108be16emsh49e6646cdbd2708p125a95jsnd8975de09285',
         'X-RapidAPI-Host': 'travel-advisor.p.rapidapi.com',
       },
     };
@@ -58,10 +58,16 @@ export default function ReviewsList(props) {
 
   // console.log(dummy[0]);
 
-  return reviews === 500 ? (
+  return typeof reviews === 'number' ? (
     <VStack mx={'auto'} h={'400px'} justify={'center'}>
-      <Text fontSize={48} fontWeight={700} color={'red.400'} lineHeight={1}>
-        ERROR 500
+      <Text
+        fontSize={32}
+        textAlign={'center'}
+        fontWeight={700}
+        color={'red.400'}
+        lineHeight={1}
+      >
+        SOMETHING WRONG
       </Text>
 
       <Text>Try to refresh the page</Text>

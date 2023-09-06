@@ -41,14 +41,14 @@ export default function Details() {
         lang: 'en_US',
       },
       headers: {
-        'X-RapidAPI-Key': '4b98a873a5msh1293f6b8d7ccbd3p1f9614jsn46f0cf647c89',
+        'X-RapidAPI-Key': 'd4108be16emsh49e6646cdbd2708p125a95jsnd8975de09285',
         'X-RapidAPI-Host': 'travel-advisor.p.rapidapi.com',
       },
     };
 
     try {
       const response = await axios.request(options);
-      console.log(response);
+      // console.log(response);
       return response?.data;
     } catch (error) {
       //   console.error(error);
@@ -71,10 +71,16 @@ export default function Details() {
     // setDetails(500);
   }, []);
 
-  return details === 500 ? (
+  return typeof details === 'number' ? (
     <VStack mx={'auto'} h={'100vh'} justify={'center'}>
-      <Text fontSize={48} fontWeight={700} color={'red.400'} lineHeight={1}>
-        ERROR 500
+      <Text
+        fontSize={32}
+        textAlign={'center'}
+        fontWeight={700}
+        color={'red.400'}
+        lineHeight={1}
+      >
+        SOMETHING WRONG
       </Text>
 
       <Text>Try to refresh the page</Text>
@@ -103,6 +109,9 @@ export default function Details() {
             onClick={() => {
               window.history.back();
             }}
+            _hover={{ bg: 'whiteAlpha.200' }}
+            _active={{ bg: 'whiteAlpha.300' }}
+            color={'white !important'}
             icon={<Icon as={ArrowBackIcon} />}
             variant={'ghost'}
           />
@@ -112,7 +121,7 @@ export default function Details() {
           position={'absolute'}
           w={'100%'}
           h={'400px'}
-          bgImage={`url(${details?.photo?.images?.original?.url})`}
+          bgImage={`url(${details?.photo?.images?.large?.url})`}
           bgPosition={'center'}
           bgSize={'cover'}
           filter={'brightness(30%)'}

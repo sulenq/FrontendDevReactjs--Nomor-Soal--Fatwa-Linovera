@@ -23,6 +23,7 @@ export default function Main(props) {
     }
     return d;
   };
+
   const filterPrice = d => {
     const priceRange = d?.price_level?.split(' - ');
     const maxPrice = priceRange?.[priceRange?.length - 1]?.length;
@@ -34,6 +35,8 @@ export default function Main(props) {
     );
   };
 
+  const categories = props?.categories;
+
   const filterInitialValues = props?.filterInitialValues;
 
   const filter = props?.filter;
@@ -42,18 +45,23 @@ export default function Main(props) {
 
   const restaurants = props?.restaurants;
 
+  const getRestaurants = props?.getRestaurants;
+
   // utils
   const [loadMoreLoading, setLoadMoreLoading] = useState(false);
 
   const handleLoadMore = async () => {
     (async () => {
       setLoadMoreLoading(true);
-      const res = await props?.getRestaurants(props?.offset);
+
+      const res = await getRestaurants({ offset: props?.offset });
+
       setLoadMoreLoading(false);
+
       const status = res?.response?.data?.status;
       if (status) {
         if (status === 500) {
-          props?.setRestaurants([status]);
+          props?.setRestaurants(status);
         }
       } else {
         props?.setRestaurants(ps => {
@@ -80,73 +88,73 @@ export default function Main(props) {
         </Text>
       </Box>
 
-      <Filter
-        filterInitialValues={filterInitialValues}
-        filter={filter}
-        filterDispatch={filterDispatch}
-      />
+      {typeof restaurants === 'number' ? (
+        <VStack mx={'auto'} h={'500px'} justify={'center'}>
+          <Text
+            fontSize={32}
+            textAlign={'center'}
+            fontWeight={700}
+            color={'red.400'}
+            lineHeight={1}
+          >
+            SOMETHING WRONG
+          </Text>
 
-      <Text className="dp" fontSize={24} mb={6} mt={10}>
-        All Restaurants
-      </Text>
+          <Text>Try to refresh the page</Text>
+          <Button
+            px={8}
+            mt={4}
+            variant={'outline'}
+            onClick={() => {
+              window.location.reload();
+            }}
+          >
+            REFRESH
+          </Button>
+        </VStack>
+      ) : restaurants?.length > 0 ? (
+        <>
+          <Filter
+            categories={categories}
+            filterInitialValues={filterInitialValues}
+            filter={filter}
+            filterDispatch={filterDispatch}
+          />
 
-      {restaurants?.length > 0 ? (
-        restaurants[0] === 500 ? (
-          <VStack mx={'auto'} h={'500px'} justify={'center'}>
-            <Text
-              fontSize={48}
-              fontWeight={700}
-              color={'red.400'}
-              lineHeight={1}
-            >
-              ERROR 500
-            </Text>
+          <Text className="dp" fontSize={24} mb={6} mt={10}>
+            All Restaurants
+          </Text>
 
-            <Text>Try to refresh the page</Text>
+          <SimpleGrid
+            w={'100%'}
+            columns={[1, 2, 3, 4]}
+            gap={6}
+            rowGap={16}
+            className="dp"
+            mb={16}
+          >
+            {restaurants
+              ?.filter(filterOpenNow)
+              .filter(filterPrice)
+              ?.map((r, i) => {
+                return <RestaurantItem key={i} r={r} />;
+              })}
+          </SimpleGrid>
+
+          <Box maxW={'320px'} w={'100%'} mx={'auto'} px={6}>
             <Button
-              px={8}
-              mt={4}
-              variant={'outline'}
-              onClick={() => {
-                window.location.reload();
-              }}
-            >
-              REFRESH
-            </Button>
-          </VStack>
-        ) : (
-          <>
-            <SimpleGrid
+              alignSelf={'center'}
               w={'100%'}
-              columns={[1, 2, 3, 4]}
-              gap={6}
-              rowGap={16}
-              className="dp"
               mb={16}
+              variant={'outline'}
+              colorScheme="p"
+              onClick={handleLoadMore}
+              isLoading={loadMoreLoading}
             >
-              {restaurants
-                ?.filter(filterOpenNow)
-                .filter(filterPrice)
-                ?.map((r, i) => {
-                  return <RestaurantItem key={i} r={r} />;
-                })}
-            </SimpleGrid>
-
-            <Box maxW={'320px'} w={'100%'} mx={'auto'} px={6}>
-              <Button
-                alignSelf={'center'}
-                w={'100%'}
-                mb={16}
-                variant={'outline'}
-                colorScheme="p"
-                onClick={handleLoadMore}
-                isLoading={loadMoreLoading}
-              >
-                LOAD MORE
-              </Button>
-            </Box>
-          </>
-        )
+              LOAD MORE
+            </Button>
+          </Box>
+        </>
       ) : (
         <VStack mx={'auto'} h={'400px'} justify={'center'}>
           <Spinner my={16} size={'xl'} />

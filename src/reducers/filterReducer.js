@@ -16,11 +16,7 @@ function filterReducer(filter, action) {
       return { ...filter, categories: action.categories };
 
     case 'reset':
-      return {
-        openNow: false,
-        price: '',
-        categories: '',
-      };
+      return action.filterInitialValues;
   }
 }
 
