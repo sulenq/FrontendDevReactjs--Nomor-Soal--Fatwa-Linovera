@@ -1355,18 +1355,21 @@ export default function Filter(props) {
 
             {/* Price */}
             <Menu>
-              <MenuButton
-                as={Button}
-                h={'30px'}
-                px={0}
-                variant={'ghost'}
-                rightIcon={<Icon as={KeyboardArrowDownIcon} fontSize={20} />}
-                fontWeight={400}
-                borderBottom={'1px solid var(--divider)'}
-                textAlign={'left'}
-              >
-                <Text mr={4}>{filter?.price || 'Price'}</Text>
-              </MenuButton>
+              <Box>
+                <MenuButton
+                  as={Button}
+                  h={'30px'}
+                  px={2}
+                  variant={'ghost'}
+                  fontWeight={400}
+                  textAlign={'left'}
+                >
+                  <HStack h={'30px'} borderBottom={'1px solid var(--divider)'}>
+                    <Text mr={4}>{filter?.price || 'Price'}</Text>
+                    <Icon as={KeyboardArrowDownIcon} fontSize={20} />
+                  </HStack>
+                </MenuButton>
+              </Box>
 
               <MenuList minW={'100px'} p={0}>
                 <Text p={3} fontSize={14} opacity={0.5} lineHeight={1}>
@@ -1406,14 +1409,15 @@ export default function Filter(props) {
               <MenuButton
                 as={Button}
                 h={'30px'}
-                px={0}
+                px={2}
                 variant={'ghost'}
-                rightIcon={<Icon as={KeyboardArrowDownIcon} fontSize={20} />}
                 fontWeight={400}
-                borderBottom={'1px solid var(--divider)'}
                 textAlign={'left'}
               >
-                <Text mr={4}>{filter?.categories.label}</Text>
+                <HStack h={'30px'} borderBottom={'1px solid var(--divider)'}>
+                  <Text mr={4}>{filter?.categories.label}</Text>
+                  <Icon as={KeyboardArrowDownIcon} fontSize={20} />
+                </HStack>
               </MenuButton>
 
               <MenuList
