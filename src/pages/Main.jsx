@@ -65,8 +65,8 @@ export default function Main(props) {
 
   return (
     <VStack id="main" mx={'auto'} gap={0} align={'flex-start'}>
-      <HStack justify={'space-between'} w={'100%'} className="dp">
-        <Text fontSize={42} lineHeight={1} my={8} mb={4} fontWeight={700}>
+      <HStack justify={'space-between'} w={'100%'} mt={8} mb={4} className="dp">
+        <Text fontSize={32} lineHeight={1} fontWeight={700}>
           Restaurants
         </Text>
 
@@ -86,7 +86,7 @@ export default function Main(props) {
         filterDispatch={filterDispatch}
       />
 
-      <Text className="dp" fontSize={28} mb={6} mt={10}>
+      <Text className="dp" fontSize={24} mb={6} mt={10}>
         All Restaurants
       </Text>
 
@@ -132,18 +132,19 @@ export default function Main(props) {
                 })}
             </SimpleGrid>
 
-            <Button
-              alignSelf={'center'}
-              w={'100%'}
-              maxW={'320px'}
-              mb={16}
-              variant={'outline'}
-              colorScheme="p"
-              onClick={handleLoadMore}
-              isLoading={loadMoreLoading}
-            >
-              LOAD MORE
-            </Button>
+            <Box maxW={'320px'} w={'100%'} mx={'auto'} px={6}>
+              <Button
+                alignSelf={'center'}
+                w={'100%'}
+                mb={16}
+                variant={'outline'}
+                colorScheme="p"
+                onClick={handleLoadMore}
+                isLoading={loadMoreLoading}
+              >
+                LOAD MORE
+              </Button>
+            </Box>
           </>
         )
       ) : (

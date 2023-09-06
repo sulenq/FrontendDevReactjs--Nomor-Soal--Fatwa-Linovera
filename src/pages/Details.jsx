@@ -11,10 +11,12 @@ import {
   Link,
   SimpleGrid,
   Spinner,
+  IconButton,
 } from '@chakra-ui/react';
 
 import PlaceIcon from '@mui/icons-material/Place';
 import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 import { useEffect, useRef, useState } from 'react';
 import Rating from '../components/Rating';
@@ -89,7 +91,23 @@ export default function Details() {
     </VStack>
   ) : Object.keys(details).length > 0 ? (
     <VStack id="details" mx={'auto'} gap={0} align={'flex-start'}>
-      <Box position={'relative'} w={'100%'} h={'400px'}>
+      <VStack position={'relative'} w={'100%'} h={'400px'}>
+        <VStack
+          w={'100%'}
+          position={'absolute'}
+          top={4}
+          align={'flex-start'}
+          className="dp"
+        >
+          <IconButton
+            onClick={() => {
+              window.history.back();
+            }}
+            icon={<Icon as={ArrowBackIcon} />}
+            variant={'ghost'}
+          />
+        </VStack>
+
         <Box
           position={'absolute'}
           w={'100%'}
@@ -101,19 +119,25 @@ export default function Details() {
           zIndex={-1}
         ></Box>
 
-        <Box className="dp" color={'white'} mt={'280px'}>
-          <Text fontSize={42} fontWeight={700} lineHeight={1} mt={8} mb={2}>
+        <Box
+          className="dp"
+          color={'white'}
+          mt={'280px'}
+          position={'absolute'}
+          bottom={0}
+        >
+          <Text fontSize={32} fontWeight={700} lineHeight={1} mt={8} mb={2}>
             {details?.name}
           </Text>
 
           <Rating
             rating={details?.rating}
-            fontSize={30}
+            fontSize={24}
             mb={4}
             color={'white !important'}
           />
         </Box>
-      </Box>
+      </VStack>
 
       <Box
         w={'100%'}
@@ -131,15 +155,13 @@ export default function Details() {
             <HStack opacity={0.5}>
               <Icon as={PlaceIcon} />
 
-              <Text fontSize={24} fontWeight={600}>
+              <Text fontSize={18} fontWeight={600}>
                 Location
               </Text>
             </HStack>
 
             <Box opacity={0.5} mb={1}>
-              <Text fontSize={18} px={8}>
-                {details?.address}
-              </Text>
+              <Text px={8}>{details?.address}</Text>
             </Box>
           </Box>
 

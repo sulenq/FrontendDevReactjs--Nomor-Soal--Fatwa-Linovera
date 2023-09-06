@@ -13,6 +13,8 @@ import {
 
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
+import useScreenWidth from '../utils/useScreenWidth';
+
 export default function Filter(props) {
   // constant
   const filter = props?.filter;
@@ -138,6 +140,8 @@ export default function Filter(props) {
     filterDispatch({ type: 'selectCategories', categories: c });
   };
 
+  const sw = useScreenWidth();
+
   return (
     <Box
       w={'100%'}
@@ -153,9 +157,9 @@ export default function Filter(props) {
         py={4}
       >
         <Stack direction={['column', null, 'row']} rowGap={1} columnGap={5}>
-          <Text flexShrink={0}>Filter By:</Text>
+          <Text flexShrink={0} fontWeight={600}>Filter By:</Text>
 
-          <HStack>
+          <Stack direction={sw < 350 ? 'column' : 'row'} gap={6}>
             {/* Open Now */}
             <HStack
               flexShrink={0}
@@ -231,7 +235,7 @@ export default function Filter(props) {
                 <Text mr={4}>{filter?.categories || 'Categories'}</Text>
               </MenuButton>
 
-              <MenuList minW={'100px'} maxH={'500px'} overflow={'auto'} p={0}>
+              <MenuList minW={'100px'} maxH={'400px'} overflow={'auto'} p={0}>
                 <Text p={3} fontSize={14} opacity={0.5} lineHeight={1}>
                   Select category/cuisine
                 </Text>
@@ -250,7 +254,7 @@ export default function Filter(props) {
                 })}
               </MenuList>
             </Menu>
-          </HStack>
+          </Stack>
         </Stack>
 
         <Button

@@ -79,7 +79,7 @@ export default function ReviewsList(props) {
   ) : reviews?.length > 0 ? (
     <SimpleGrid
       w={'100%'}
-      columns={[1]}
+      columns={[1, null, 2]}
       gap={6}
       rowGap={16}
       className="dp"
