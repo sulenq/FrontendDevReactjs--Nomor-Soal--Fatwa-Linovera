@@ -41,7 +41,7 @@ export default function Details() {
         lang: 'en_US',
       },
       headers: {
-        'X-RapidAPI-Key': 'd4108be16emsh49e6646cdbd2708p125a95jsnd8975de09285',
+        'X-RapidAPI-Key': 'b04d851b8dmsha944d4cba031189p17f3e2jsnfe6a1423fe40',
         'X-RapidAPI-Host': 'travel-advisor.p.rapidapi.com',
       },
     };

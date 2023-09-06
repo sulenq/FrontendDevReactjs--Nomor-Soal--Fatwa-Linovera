@@ -33,42 +33,49 @@ function App() {
   const [restaurants, setRestaurants] = useState([]);
 
   // utils
-  const getRestaurants = useCallback(async p => {
-    const options = {
-      method: 'GET',
-      url: 'https://travel-advisor.p.rapidapi.com/restaurants/list',
-      params: {
-        location_id: '297704',
-        restaurant_tagcategory: '10591',
-        restaurant_tagcategory_standalone: '10591',
-        currency: 'USD',
-        lunit: 'km',
-        limit: '8',
-        open_now: 'false',
-        lang: 'en_US',
-        offset: p?.offset,
-        combined_food: filter?.categories?.value,
-      },
-      headers: {
-        'X-RapidAPI-Key': 'd4108be16emsh49e6646cdbd2708p125a95jsnd8975de09285',
-        'X-RapidAPI-Host': 'travel-advisor.p.rapidapi.com',
-      },
-    };
+  const getRestaurants = useCallback(
+    async p => {
+      const options = {
+        method: 'GET',
+        url: 'https://travel-advisor.p.rapidapi.com/restaurants/list',
+        params: {
+          location_id: '297704',
+          restaurant_tagcategory: '10591',
+          restaurant_tagcategory_standalone: '10591',
+          currency: 'USD',
+          lunit: 'km',
+          limit: '8',
+          open_now: 'false',
+          lang: 'en_US',
+          offset: p?.offset,
+          combined_food: filter?.categories?.value,
+        },
+        headers: {
+          'X-RapidAPI-Key':
+            'b04d851b8dmsha944d4cba031189p17f3e2jsnfe6a1423fe40',
+          'X-RapidAPI-Host': 'travel-advisor.p.rapidapi.com',
+        },
+      };
 
-    try {
-      const response = await axios.request(options);
-      setOffset(ps => ps + parseInt(response.data?.paging?.results));
-      setCategories(
-        response?.data?.filters_v2?.filter_sections[1]?.filter_groups[0]
-          ?.options
-      );
-      // console.log(response.data);
-      return response.data?.data;
-    } catch (error) {
-      console.error(error);
-      return error;
-    }
-  }, [filter.categories.value]);
+      try {
+        const response = await axios.request(options);
+        setOffset(ps => {
+          // console.log('ps', ps);
+          return ps + parseInt(response.data?.paging?.results);
+        });
+        setCategories(
+          response?.data?.filters_v2?.filter_sections[1]?.filter_groups[0]
+            ?.options
+        );
+        // console.log(response.data);
+        return response.data?.data;
+      } catch (error) {
+        console.error(error);
+        return error;
+      }
+    },
+    [filter.categories.value]
+  );
 
   useEffect(() => {
     (async () => {
